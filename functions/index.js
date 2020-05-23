@@ -8,7 +8,7 @@ exports.fetchData = functions.https.onRequest((request, response) => {
     helper.getDailyData().then((response) => {
         return response;
     }).then((resp) => {
-        let jsonData = JSON.parse(resp);
+        let jsonData = JSON.parse(resp.body);
         return response.json(JSON.stringify(jsonData, null, 4));
     }).catch((err) => {
         return response.json(err);
