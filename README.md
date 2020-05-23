@@ -17,4 +17,30 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
     response.send("Hello from Firebase!");
 });
 ```
+Now in order to create the Cloud function in firebase it comes with it's own CLI
 
+First we need to install the firebase tools pacakge from npm
+```
+npm install -g firebase-tools
+```
+
+After this is setup run the following command to login to your firebase account via CLI
+```
+firebase login
+```
+
+Once you are logged in, run the following command to initialise a dummy function in our workspace
+```
+firebase init
+```
+
+It goes through a number of steps in the CLI so chose the options wisely and appropriately.
+
+After we have the structure ready like we see in the repository
+
+From here index.js becomes the entry point for our cloud function and thus we can play around that.
+
+Once we are done writing our function, deploy the function using the following command
+```
+firebase deploy
+```
