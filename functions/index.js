@@ -17,7 +17,7 @@ exports.fetchData = functions.https.onRequest((request, response) => {
         let jsonData = JSON.parse(resp.body);
         console.log(jsonData);
         console.log(jsonData.active);
-        var message = "Total Cases : " + jsonData.cases + " Recovered : " + jsonData.recovered + " Active Cases : " + jsonData.active + " Deaths : " + jsonData.deaths;
+        var message = "Total Cases : " + jsonData.cases + "\nRecovered : " + jsonData.recovered + "\nActive Cases : " + jsonData.active + "\nDeaths : " + jsonData.deaths;
         // The topic name can be optionally prefixed with "/topics/".
         var topic = "dailyUpdates";
 

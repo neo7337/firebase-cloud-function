@@ -1,4 +1,4 @@
-Google Cloud Function - Firebase
+<b>Google Cloud Function - Firebase</b>
 
 The following code helps in demonstration of the Cloud Functions in accordance with the Firebase provided by Google.
 These Cloud Functions still use the GCP->Cloud Function API from your account hence it is needed to be enabled in order for you to execute a cloud function in Firebase otherwise we will not be able to deploy the function.
@@ -60,6 +60,7 @@ var payload = {
 ```
 
 To know more about Cloud Messaging use the following link : <a href="https://firebase.google.com/docs/cloud-messaging">Cloud Messaging</a>
+
 Also use the following link to know more about the types of messages : <a href="https://firebase.google.com/docs/reference/admin/node/admin.messaging">Admin Messaging</a>
 
 Now once the payload has been generated, use the following code to send the notification to the clients that have subscribed to the topics:-
