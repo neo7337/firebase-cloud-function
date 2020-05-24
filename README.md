@@ -44,3 +44,34 @@ Once we are done writing our function, deploy the function using the following c
 ```
 firebase deploy
 ```
+
+The function that we have created uses the <b>topics</b> to send push notifications to the client applications where the topics have already been subscribed on the client side.
+
+The code below is the example of the payload while doing the communication via <b>topics</b> ->
+```
+var topic = "dailyUpdates";
+var payload = {
+    notification: {
+        title: 'Stay Home, Stay Safe',
+        body: message
+    },
+    topic: topic
+};
+```
+
+To know more about Cloud Messaging use the following link : <a href="https://firebase.google.com/docs/cloud-messaging">Cloud Messaging</a>
+Also use the following link to know more about the types of messages : <a href="https://firebase.google.com/docs/reference/admin/node/admin.messaging">Admin Messaging</a>
+
+Now once the payload has been generated, use the following code to send the notification to the clients that have subscribed to the topics:-
+```
+admin.messaging().send(payload)
+    .then((resp) => {
+        // Response is a message ID string.
+        console.log('Successfully sent message:', resp);
+        return response.json(JSON.stringify(jsonData, null, 4));
+    })
+    .catch((error) => {
+        console.log('Error sending message:', error);
+        return response.json(err);
+    });
+```
