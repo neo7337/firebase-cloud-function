@@ -10,14 +10,14 @@ admin.initializeApp(functions.config().firebase);
 //
 
 //exports.fetchData = functions.pubsub.schedule('every 5 minutes').timeZone('utc').run((context) => {
-exports.fetchData = functions.https.onRequest((request, response) => {
+exports.fetchData = functions.pubsub.schedule('0 4 * * *').timeZone('utc').run((context) => {
     helper.getDailyData().then((respData) => {
         return respData;
     }).then((resp) => {
         let jsonData = JSON.parse(resp.body);
         console.log(jsonData);
         console.log(jsonData.active);
-        var message = "Total Cases : " + jsonData.cases + "\nRecovered : " + jsonData.recovered + "\nActive Cases : " + jsonData.active + "\nDeaths : " + jsonData.deaths;
+        var message = "Total Cases : " + jsonData.cases + "\nRecovered : " + jsonData.recovered + "\nActive : " + jsonData.active + "\nDeaths : " + jsonData.deaths;
         // The topic name can be optionally prefixed with "/topics/".
         var topic = "dailyUpdates";
 
