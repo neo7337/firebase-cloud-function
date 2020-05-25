@@ -17,7 +17,7 @@ exports.dailyData = functions.pubsub.schedule('40 12 * * *').timeZone("Asia/Kolk
         let jsonData = JSON.parse(resp.body);
         console.log(jsonData);
         //console.log(jsonData.active);
-        var message = "Total Cases : " + jsonData.cases + "\nRecovered : " + jsonData.recovered + "\nActive : " + jsonData.active + "\nDeaths : " + jsonData.deaths;
+        var message = "Total Cases : " + numberWithCommas(jsonData.cases) + "\nRecovered : " + numberWithCommas(jsonData.recovered) + "\nActive : " + numberWithCommas(jsonData.active) + "\nDeaths : " + numberWithCommas(jsonData.deaths);
         // The topic name can be optionally prefixed with "/topics/".
         var topic = "dailyUpdates";
 
@@ -37,3 +37,7 @@ exports.dailyData = functions.pubsub.schedule('40 12 * * *').timeZone("Asia/Kolk
         return JSON.stringify(err);
     })
 });
+
+function numberWithCommas(x) {
+    return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
