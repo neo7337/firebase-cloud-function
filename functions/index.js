@@ -10,8 +10,8 @@ admin.initializeApp(functions.config().firebase);
 //
 
 //exports.fetchData = functions.pubsub.schedule('every 5 minutes').timeZone('utc').onRun((context) => {
-exports.dailyData = functions.pubsub.schedule('30 12 * * *').timeZone("Asia/Kolkata").onRun((context) => {
-    helper.getDailyData().then((respData) => {
+exports.dailyData = functions.pubsub.schedule('40 12 * * *').timeZone("Asia/Kolkata").onRun((context) => {
+    return helper.getDailyData().then((respData) => {
         return respData;
     }).then((resp) => {
         let jsonData = JSON.parse(resp.body);
