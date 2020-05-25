@@ -9,14 +9,14 @@ admin.initializeApp(functions.config().firebase);
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 
-//exports.fetchData = functions.pubsub.schedule('every 5 minutes').timeZone('utc').run((context) => {
-exports.fetchData = functions.pubsub.schedule('0 4 * * *').timeZone('utc').run((context) => {
+//exports.fetchData = functions.pubsub.schedule('every 5 minutes').timeZone('utc').onRun((context) => {
+exports.dailyData = functions.pubsub.schedule('30 12 * * *').timeZone("Asia/Kolkata").onRun((context) => {
     helper.getDailyData().then((respData) => {
         return respData;
-    }).then((resp) => {
+    }).then(async (resp) => {
         let jsonData = JSON.parse(resp.body);
         console.log(jsonData);
-        console.log(jsonData.active);
+        //console.log(jsonData.active);
         var message = "Total Cases : " + jsonData.cases + "\nRecovered : " + jsonData.recovered + "\nActive : " + jsonData.active + "\nDeaths : " + jsonData.deaths;
         // The topic name can be optionally prefixed with "/topics/".
         var topic = "dailyUpdates";
@@ -29,16 +29,16 @@ exports.fetchData = functions.pubsub.schedule('0 4 * * *').timeZone('utc').run((
             topic: topic
         };
         // Send a message to devices subscribed to the provided topic.
-        return admin.messaging().send(payload)
-            .then((resp) => {
-                // Response is a message ID string.
-                console.log('Successfully sent message:', resp);
-                return response.json(JSON.stringify(jsonData, null, 4));
-            })
-            .catch((error) => {
-                console.log('Error sending message:', error);
-                return response.json(err);
-            });
+        var msg='';
+        try{
+            let resp = await admin.messaging().send(payload);
+            console.log('Successfully sent message:', resp);
+            msg='Success';
+        } catch (e) {
+            console.log('Error sending message:', error)
+            msg='Error';
+        }
+        return msg;
         //return response.json(JSON.stringify(jsonData, null, 4));
     }).catch((err) => {
         return response.json(err);
