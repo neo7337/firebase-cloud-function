@@ -29,16 +29,14 @@ exports.dailyData = functions.pubsub.schedule('30 12 * * *').timeZone("Asia/Kolk
             topic: topic
         };
         // Send a message to devices subscribed to the provided topic.
-        var msg='';
         try{
             let resp = await admin.messaging().send(payload);
             console.log('Successfully sent message:', resp);
-            msg='Success';
+            return 'Success';
         } catch (e) {
             console.log('Error sending message:', error)
-            msg='Error';
+            return 'Error';
         }
-        return msg;
         //return response.json(JSON.stringify(jsonData, null, 4));
     }).catch((err) => {
         return response.json(err);
