@@ -13,7 +13,7 @@ admin.initializeApp(functions.config().firebase);
 exports.dailyData = functions.pubsub.schedule('30 12 * * *').timeZone("Asia/Kolkata").onRun((context) => {
     helper.getDailyData().then((respData) => {
         return respData;
-    }).then(async (resp) => {
+    }).then((resp) => {
         let jsonData = JSON.parse(resp.body);
         console.log(jsonData);
         //console.log(jsonData.active);
@@ -29,16 +29,11 @@ exports.dailyData = functions.pubsub.schedule('30 12 * * *').timeZone("Asia/Kolk
             topic: topic
         };
         // Send a message to devices subscribed to the provided topic.
-        try{
-            let resp = await admin.messaging().send(payload);
-            console.log('Successfully sent message:', resp);
-            return 'Success';
-        } catch (e) {
-            console.log('Error sending message:', error)
-            return 'Error';
-        }
-        //return response.json(JSON.stringify(jsonData, null, 4));
+        return admin.messaging().send(payload);
+    }).then((resp) => {
+        console.log('Successfully sent message:', resp);
+        return JSON.stringify({"message" : "success"});
     }).catch((err) => {
-        return response.json(err);
+        return JSON.stringify(err);
     })
 });
